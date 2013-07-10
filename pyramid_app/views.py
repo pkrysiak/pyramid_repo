@@ -35,7 +35,6 @@ def _get_prices(search_phrase):
         nok = nokaut_api(search_phrase,nokaut_key)
     except NoItemException:
         return (None, None), (None, None), False
-    # import ipdb; ipdb.set_trace()
     nok_price = nok[1]
     all_price = all[1]
 
