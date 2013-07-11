@@ -22,11 +22,10 @@ def res_view(request):
     except NokautNoItemEx:
         nok = (None, None)
 
-
     nok_price, nok_link = nok[1], nok[0]
     all_price, all_link = all[1], all[0]
 
-    if nok_price == None and all_price == None:
+    if (nok_price == None and all_price == None) or (nok_price == all_price):
         all_mode, nok_mode = '', ''
     elif nok_price != None and all_price == None:
         all_mode, nok_mode = '', 'win'
@@ -35,18 +34,15 @@ def res_view(request):
     else :
         if all_price < nok_price:
             all_mode, nok_mode = 'win', ''
-        else:
+        elif all_price > nok_price:
             all_mode, nok_mode = '', 'win'
 
-    if all_mode == '' and nok_mode == '':
-        return HTTPNotFound('No items found..')
-    else:
-        return {
-                'product_name' : search_phrase,
-                'allegro_link' : all_link,
-                'nokaut_link' : nok_link,
-                'allegro_price' : all_price,
-                'nokaut_price' : nok_price,
-                'allegro_price_mode' : all_mode,
-                'nokaut_price_mode' : nok_mode
+    return {
+            'product_name' : search_phrase,
+            'allegro_link' : all_link,
+            'nokaut_link' : nok_link,
+            'allegro_price' : all_price,
+            'nokaut_price' : nok_price,
+            'allegro_price_mode' : all_mode,
+            'nokaut_price_mode' : nok_mode
         }
